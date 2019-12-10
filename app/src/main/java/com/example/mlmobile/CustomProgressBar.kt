@@ -28,7 +28,7 @@ class CustomProgressBar {
         view.cp_bg_view.setBackgroundColor(Color.parseColor("#60000000")) //Background Color
         view.cp_cardview.setCardBackgroundColor(Color.parseColor("#70000000")) //Box Color
         setColorFilter(view.cp_pbar.indeterminateDrawable,
-            ResourcesCompat.getColor(context.resources, R.color.colorPrimary, null)) //Progress Bar Color
+            ResourcesCompat.getColor(context.resources, R.color.colorAccent, null)) //Progress Bar Color
         view.cp_title.setTextColor(Color.WHITE) //Text Color
 
         dialog = Dialog(context, R.style.CustomProgressBarTheme)
