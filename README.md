@@ -1,5 +1,5 @@
 # Mobile
-La apliación consiste en un buscador que utiliza la API de ML para traer información y mostrarla de forma detallada. 
+La aplicación consiste en un buscador que utiliza la API de ML para traer información y mostrarla de forma detallada. 
 
 # Documentación utilizada 
 API ML:
