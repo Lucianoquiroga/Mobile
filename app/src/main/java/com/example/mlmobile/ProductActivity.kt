@@ -13,7 +13,7 @@ class ProductActivity : AppCompatActivity(), ProductoFragment.OnListFragmentInte
 
         val cantidad: String? = intent.getStringExtra("cantidad")
 
-        this.setTitle(cantidad + " resultados")
+        this.title = "$cantidad resultados"
 
     }
 

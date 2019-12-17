@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -37,15 +35,10 @@ class MainActivity : AppCompatActivity() {
         }
         val buttonSearch: Button = findViewById(R.id.buttonSearch)
         val inputSearch: EditText = findViewById(R.id.editTextSearch)
-        val mAlertDialog = AlertDialog.Builder(this)
-        mAlertDialog.setTitle("Cargando...")
-        mAlertDialog.setMessage("gas")
 
         buttonSearch.setSafeOnClickListener  {
 
             if(Network.redOn(this)) {
-
-                var search = inputSearch.text
 
                 if (!inputSearch.text.isEmpty()) {
                     var textSearch: String = inputSearch.text.toString()
@@ -53,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                     textSearch = URLEncoder.encode(textSearch, "UTF-8")
                     textSearch = textSearch.replace(oldValue = "+", newValue = "%20")
 
-                    var urlML: String = "https://api.mercadolibre.com/sites/MLA/search?q=" + textSearch
+                    var urlML: String = "https://api.mercadolibre.com/sites/MLA/search?q=$textSearch"
 
                     solicitudHTTPVolley(urlML)
 
@@ -65,17 +58,13 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "no hay conexión de internet", Toast.LENGTH_SHORT).show()
             }
         }
-
-    }
-
-    private fun openDialog() {
     }
 
     private fun solicitudHTTPVolley(url: String){
         val progressBarClass = CustomProgressBar()
-        progressBarClass.show(this,"Buscando...")
-
         val queue = Volley.newRequestQueue(this)
+
+        progressBarClass.show(this,"Buscando...")
 
         val request = StringRequest(Request.Method.GET, url, Response.Listener<String> {
                 response ->
@@ -83,8 +72,8 @@ class MainActivity : AppCompatActivity() {
 
                 var json = JSONObject(response)
                 val results = json.getJSONArray("results")
-                listaProductosDB = ArrayList()
 
+                listaProductosDB = ArrayList()
                 crud = ProductoCRUD(this)
 
                 if (crud?.getProductos()?.size!! > 0) {
@@ -114,6 +103,7 @@ class MainActivity : AppCompatActivity() {
                 val nextIntent = Intent(this, ProductActivity::class.java).apply {
                     putExtra("cantidad",  cantidad)
                 }
+
                 progressBarClass.dialog.dismiss()
                 startActivity(nextIntent)
 
@@ -125,7 +115,7 @@ class MainActivity : AppCompatActivity() {
         queue.add(request)
     }
 
-    fun View.setSafeOnClickListener(onSafeClick: (View) -> Unit) {
+    private fun View.setSafeOnClickListener(onSafeClick: (View) -> Unit) {
         val safeClickListener = SafeClickListener {
             onSafeClick(it)
         }
